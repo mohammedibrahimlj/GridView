@@ -15,37 +15,77 @@ namespace GridView_Prog
         {
             if (!Page.IsPostBack)
             {
-                SqlConnection con = new SqlConnection("Data Source=(localdb)\\v11.0;Initial Catalog=master;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
-                con.Open();
-                SqlCommand cmd = new SqlCommand();
-                cmd.Connection = con;
-                cmd.CommandText = "select * from Demo";
-                SqlDataAdapter sda = new SqlDataAdapter(cmd);
-                DataSet dt = new DataSet();
-                sda.Fill(dt);
-                ListView1.DataSource = dt;
-                ListView1.DataBind();
+                DataFill();
             }
         }
-
-        protected void Button1_Command(object sender, CommandEventArgs e)
-        {
-           
-        }
-
         protected void ListView1_ItemEditing(object sender, ListViewEditEventArgs e)
         {
             ListView1.EditIndex = e.NewEditIndex;
+            DataFill();
         }
 
-        protected void Button1_Click(object sender, EventArgs e)
+        public void  DataFill()
         {
-
+            SqlConnection con = new SqlConnection("Data Source=(localdb)\\v11.0;Initial Catalog=master;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+            con.Open();
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = con;
+            cmd.CommandText = "select * from Demo";
+            SqlDataAdapter sda = new SqlDataAdapter(cmd);
+            DataSet dt = new DataSet();
+            sda.Fill(dt);
+            ListView1.DataSource = dt;
+            ListView1.DataBind();
         }
 
-        protected void Button1_Click1(object sender, EventArgs e)
+        protected void ListView1_ItemCanceling(object sender, ListViewCancelEventArgs e)
+        {
+            ListView1.EditIndex = -1;
+        }
+
+        protected void ListView1_ItemUpdating(object sender, ListViewUpdateEventArgs e)
         {
 
+            Label Sid = (Label)ListView1.EditItem.FindControl("Label4");
+            int id = int.Parse(Sid.Text.ToString());
+           
+            TextBox name = (TextBox)ListView1.EditItem.FindControl("TextBox1");
+            string names = name.Text.ToString();
+            TextBox Lage = (TextBox)ListView1.EditItem.FindControl("TextBox2");
+            int age =int.Parse(Lage.Text.ToString());
+            TextBox Lclass = (TextBox)ListView1.EditItem.FindControl("TextBox3");
+            string classes = Lclass.Text.ToString();
+            SqlConnection con = new SqlConnection("Data Source=(localdb)\\v11.0;Initial Catalog=master;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+            con.Open();
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = con;
+            cmd.Parameters.AddWithValue("@id", id);
+            cmd.Parameters.AddWithValue("@name", names.ToString());
+            cmd.Parameters.AddWithValue("@age", age);
+            cmd.Parameters.AddWithValue("@classes", classes.ToString());
+            cmd.CommandText = "update Demo set Stu_Name=@name, Stu_Age=@age,Stu_class=@classes where Stu_Id=@id";
+            cmd.ExecuteNonQuery();
+            ListView1.EditIndex = -1;
+            DataFill();
+        }
+
+        protected void ListView1_ItemDeleted(object sender, ListViewDeletedEventArgs e)
+        {
+            
+        }
+
+        protected void ListView1_ItemDeleting(object sender, ListViewDeleteEventArgs e)
+        {
+            Label Sid = (Label)ListView1.EditItem.FindControl("Label4");
+            int id = int.Parse(Sid.Text.ToString());
+            SqlConnection con = new SqlConnection("Data Source=(localdb)\\v11.0;Initial Catalog=master;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+            con.Open();
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = con;
+            cmd.CommandText = "delete from demo where Stu_Id=@id";
+            cmd.Parameters.AddWithValue("@id", id);
+            cmd.ExecuteNonQuery();
+            DataFill();
         }
     }
 }

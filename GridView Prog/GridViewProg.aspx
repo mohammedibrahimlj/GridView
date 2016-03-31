@@ -9,7 +9,7 @@
 <body>
     <form id="form1" runat="server">
     <div>
-        <asp:ListView ID="ListView1" runat="server" OnItemEditing="ListView1_ItemEditing">
+        <asp:ListView ID="ListView1" runat="server" OnItemEditing="ListView1_ItemEditing" OnItemCanceling="ListView1_ItemCanceling" OnItemUpdating="ListView1_ItemUpdating" OnItemDeleted="ListView1_ItemDeleted" OnItemDeleting="ListView1_ItemDeleting">
             <ItemTemplate>
                 <table>
                     <tr>
@@ -23,17 +23,23 @@
                         </td>
                          <td>
                             <asp:Label ID="Label3" runat="server" Text='<%#Eval("Stu_class") %>'></asp:Label>
+                        </td
+                            <td>
+                            <asp:Label ID="Label4" runat="server" Text='<%#Eval("Stu_Id") %>' Visible="false"></asp:Label>
+
                         </td>
                         <td>
                             <asp:Button ID="Edit" runat="server" Text="Edit" CommandName="Edit" />
-
+                           <asp:Button ID="Delete" runat="server" Text="Delete" CommandName="Delete" />
                         </td>
+
                     </tr>
                 </table>
             </ItemTemplate>
             <EditItemTemplate>
                 <table>
                     <tr>
+                        
                         <td>
                             <asp:TextBox ID="TextBox1" runat="server" Text='<%#Eval("Stu_Name") %>'></asp:TextBox>
                         </td>
@@ -42,6 +48,14 @@
                         </td>
                          <td>
                             <asp:TextBox ID="TextBox3" runat="server" Text='<%#Eval("Stu_class") %>'></asp:TextBox>
+                        </td>
+                        <td>
+                            <asp:Label ID="Label4" runat="server" Text='<%#Eval("Stu_Id") %>' Visible="false"></asp:Label>
+
+                        </td>
+                        <td>
+                             <asp:Button ID="Update" runat="server" Text="Update" CommandName="Update"  />
+                             <asp:Button ID="Cancel" runat="server" Text="Cancel" CommandName="Cancel" />
                         </td>
                     </tr>
                 </table>
