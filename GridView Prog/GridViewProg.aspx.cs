@@ -13,19 +13,37 @@ namespace GridView_Prog
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            SqlConnection con = new SqlConnection("Data Source=(localdb)\\v11.0;Initial Catalog=master;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
-            con.Open();
-            SqlCommand cmd = new SqlCommand();
-            cmd.Connection = con;
-            cmd.CommandText = "select * from Demo";
-            SqlDataAdapter sda = new SqlDataAdapter(cmd);
-            DataSet dt = new DataSet();
-            sda.Fill(dt);
-            ListView1.DataSource = dt;
-            ListView1.DataBind();
+            if (!Page.IsPostBack)
+            {
+                SqlConnection con = new SqlConnection("Data Source=(localdb)\\v11.0;Initial Catalog=master;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+                con.Open();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = con;
+                cmd.CommandText = "select * from Demo";
+                SqlDataAdapter sda = new SqlDataAdapter(cmd);
+                DataSet dt = new DataSet();
+                sda.Fill(dt);
+                ListView1.DataSource = dt;
+                ListView1.DataBind();
+            }
         }
 
         protected void Button1_Command(object sender, CommandEventArgs e)
+        {
+           
+        }
+
+        protected void ListView1_ItemEditing(object sender, ListViewEditEventArgs e)
+        {
+            ListView1.EditIndex = e.NewEditIndex;
+        }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void Button1_Click1(object sender, EventArgs e)
         {
 
         }

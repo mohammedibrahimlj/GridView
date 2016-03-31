@@ -9,7 +9,7 @@
 <body>
     <form id="form1" runat="server">
     <div>
-        <asp:ListView ID="ListView1" runat="server">
+        <asp:ListView ID="ListView1" runat="server" OnItemEditing="ListView1_ItemEditing">
             <ItemTemplate>
                 <table>
                     <tr>
@@ -25,7 +25,7 @@
                             <asp:Label ID="Label3" runat="server" Text='<%#Eval("Stu_class") %>'></asp:Label>
                         </td>
                         <td>
-                            <asp:Button ID="Button1" runat="server" Text="Edit" CommandArgument='<%# Eval("Stu_Id") %>' OnCommand=""/>
+                            <asp:Button ID="Edit" runat="server" Text="Edit" CommandName="Edit" />
 
                         </td>
                     </tr>
