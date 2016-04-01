@@ -13,9 +13,12 @@ namespace GridView_Prog
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            ListView1.InsertItemPosition = InsertItemPosition.LastItem;
             if (!Page.IsPostBack)
             {
                 DataFill();
+               
+                ListView1.InsertItemPosition = InsertItemPosition.LastItem;
             }
         }
         protected void ListView1_ItemEditing(object sender, ListViewEditEventArgs e)
@@ -36,11 +39,13 @@ namespace GridView_Prog
             sda.Fill(dt);
             ListView1.DataSource = dt;
             ListView1.DataBind();
+            ListView1.InsertItemPosition = InsertItemPosition.LastItem;
         }
 
         protected void ListView1_ItemCanceling(object sender, ListViewCancelEventArgs e)
         {
             ListView1.EditIndex = -1;
+            DataFill();
         }
 
         protected void ListView1_ItemUpdating(object sender, ListViewUpdateEventArgs e)
@@ -86,6 +91,32 @@ namespace GridView_Prog
             cmd.CommandText = "delete from demo where Stu_Id=@id";
             cmd.Parameters.AddWithValue("@id", id);
             cmd.ExecuteNonQuery();
+            DataFill();
+        }
+
+        protected void ListView1_ItemInserting(object sender, ListViewInsertEventArgs e)
+        {
+
+            TextBox sname = (TextBox)ListView1.InsertItem.FindControl("TextBox4");
+            string name = sname.Text.ToString();
+            TextBox sage = (TextBox)ListView1.InsertItem.FindControl("TextBox5");
+            int age = int.Parse(sage.Text.ToString());
+            TextBox cclass = (TextBox)ListView1.InsertItem.FindControl("TextBox6");
+            string classes = cclass.Text.ToString();
+            SqlConnection con = new SqlConnection("Data Source=(localdb)\\v11.0;Initial Catalog=master;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+            con.Open();
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = con;
+            cmd.CommandText = "insert into Demo values(@name,@age,@classes)";
+            cmd.Parameters.AddWithValue("@name", name.ToString());
+            cmd.Parameters.AddWithValue("@age", age);
+            cmd.Parameters.AddWithValue("@classes", classes.ToString());
+            cmd.ExecuteNonQuery();
+            DataFill();
+        }
+
+        protected void ListView1_ItemInserted(object sender, ListViewInsertedEventArgs e)
+        {
             DataFill();
         }
     }

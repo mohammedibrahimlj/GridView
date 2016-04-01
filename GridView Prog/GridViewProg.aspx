@@ -9,7 +9,7 @@
 <body>
     <form id="form1" runat="server">
     <div>
-        <asp:ListView ID="ListView1" runat="server" OnItemEditing="ListView1_ItemEditing" OnItemCanceling="ListView1_ItemCanceling" OnItemUpdating="ListView1_ItemUpdating" OnItemDeleted="ListView1_ItemDeleted" OnItemDeleting="ListView1_ItemDeleting">
+        <asp:ListView ID="ListView1" runat="server" OnItemEditing="ListView1_ItemEditing" OnItemCanceling="ListView1_ItemCanceling" OnItemUpdating="ListView1_ItemUpdating" OnItemDeleted="ListView1_ItemDeleted" OnItemDeleting="ListView1_ItemDeleting" OnItemInserting="ListView1_ItemInserting" OnItemInserted="ListView1_ItemInserted">
             <ItemTemplate>
                 <table>
                     <tr>
@@ -70,8 +70,26 @@
                     </tr>
                 </table>
             </LayoutTemplate>
+            <InsertItemTemplate>
+                <table>
+                    <tr>
+                        <td>
+                            <asp:TextBox ID="TextBox4" runat="server" Text='<%#Bind("Stu_Name") %>'></asp:TextBox>
+                        </td>
+                        <td>
+                            <asp:TextBox ID="TextBox5" runat="server" Text='<%#Bind("Stu_Age") %>'></asp:TextBox>
+                        </td>
+                        <td>
+                            <asp:TextBox ID="TextBox6" runat="server" Text='<%#Bind("Stu_class") %>'></asp:TextBox>
+                        </td>
+                        <td>
+                            <asp:Button ID="Insert" runat="server" Text="Insert" CommandName="Insert"/>
+
+                        </td>
+                    </tr>
+                </table>
+            </InsertItemTemplate>
         </asp:ListView>
-    
     </div>
     </form>
 </body>
