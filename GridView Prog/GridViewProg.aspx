@@ -25,7 +25,7 @@
                             <asp:Label ID="Label3" runat="server" Text='<%#Eval("Stu_class") %>'></asp:Label>
                         </td
                             <td>
-                            <asp:Label ID="Label4" runat="server" Text='<%#Eval("Stu_Id") %>' Visible="false"></asp:Label>
+                            <asp:Label ID="Label5" runat="server" Text='<%#Eval("Stu_Id") %>' Visible="false"></asp:Label>
 
                         </td>
                         <td>

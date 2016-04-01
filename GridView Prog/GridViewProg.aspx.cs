@@ -76,7 +76,8 @@ namespace GridView_Prog
 
         protected void ListView1_ItemDeleting(object sender, ListViewDeleteEventArgs e)
         {
-            Label Sid = (Label)ListView1.EditItem.FindControl("Label4");
+            ListViewItem lvi=ListView1.Items[e.ItemIndex];
+            Label Sid = (Label)lvi.FindControl("Label5");
             int id = int.Parse(Sid.Text.ToString());
             SqlConnection con = new SqlConnection("Data Source=(localdb)\\v11.0;Initial Catalog=master;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
             con.Open();
